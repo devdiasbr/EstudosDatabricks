@@ -27,17 +27,20 @@
 # MAGIC ## 1.1 — Task 1: Ingestão (Bronze)
 # MAGIC
 # MAGIC Em produção, este notebook seria a Task 1 do Workflow.
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
 
 # COMMAND ----------
 
-# Simular ingestão de dados
-dados_novos = [
-    (101, "Produto A", "cat1", 100.00, "2024-03-20"),
-    (102, "Produto B", "cat2", 250.00, "2024-03-20"),
-    (103, "Produto C", "cat1", 75.00, "2024-03-20")
-]
+# Simular ingestão incremental — lê novos registros de vendas do dia
+from pyspark.sql.functions import current_date, lit
+from datetime import date
 
-df_ingestao = spark.createDataFrame(dados_novos, ["id", "nome", "categoria", "valor", "data"])
+# Pegar uma amostra de vendas como se fossem "dados novos do dia"
+df_ingestao = (spark.table("certificacao_bronze.vendas")
+               .filter("data_venda >= '2024-12-01'")
+               .limit(100)
+               .withColumn("ingerido_em", current_date()))
 registros_ingeridos = df_ingestao.count()
 
 # Salvar na bronze

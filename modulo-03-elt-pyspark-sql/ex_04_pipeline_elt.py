@@ -27,43 +27,36 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Step 1 — EXTRACT: Carregar dados brutos
+# MAGIC ## Step 1 — EXTRACT: Carregar dados brutos (Faker)
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
+# MAGIC
+# MAGIC A tabela `certificacao_bronze.vendas_raw` já foi gerada pelo Faker com problemas reais:
+# MAGIC - produto nulo (~5%)
+# MAGIC - valor negativo (~5%)
+# MAGIC - estado nulo (~5%)
+# MAGIC - data malformada (~5%)
+# MAGIC - ~500 duplicatas
 
 # COMMAND ----------
 
-# Simular dados brutos (como se viessem de um CSV externo)
-dados_brutos = [
-    (1, "Notebook Dell", "eletronicos", "3500.00", "2024-01-10", "SP"),
-    (2, "Mouse Logitech", "perifericos", "89.90", "2024-01-12", "RJ"),
-    (3, "Notebook Dell", "eletronicos", "3500.00", "2024-01-10", "SP"),  # duplicata
-    (4, "Monitor Samsung", "eletronicos", "1899.00", "2024-02-01", "MG"),
-    (5, "Teclado Mecânico", "perifericos", "199.90", "2024-01-15", "SP"),
-    (6, None, "perifericos", "150.00", "2024-02-10", "RJ"),  # produto nulo
-    (7, "Webcam HD", "perifericos", "-50.00", "2024-02-15", "SP"),  # valor negativo
-    (8, "Headset Gamer", "perifericos", "450.00", "2024-03-01", None),  # estado nulo
-    (9, "SSD 1TB", "armazenamento", "399.90", "2024-03-05", "MG"),
-    (10, "Notebook Lenovo", "eletronicos", "4200.00", "2024-03-10", "RJ")
-]
+df_bruto = spark.table("certificacao_bronze.vendas_raw")
 
-df_bruto = spark.createDataFrame(dados_brutos,
-    ["id", "produto", "categoria", "valor", "data_venda", "estado"])
-
-print(f"Registros brutos: {df_bruto.count()}")
-display(df_bruto)
+print(f"Registros brutos: {df_bruto.count():,}")
+display(df_bruto.limit(10))
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Step 2 — LOAD: Salvar na camada Bronze (dados como recebidos)
+# MAGIC ## Step 2 — LOAD: Bronze já disponível
+# MAGIC
+# MAGIC A tabela Bronze foi criada pelo gerador de dados.
 
 # COMMAND ----------
 
-# Salvar como tabela Delta na camada Bronze
-df_bruto.write.format("delta") \
-    .mode("overwrite") \
-    .saveAsTable("certificacao_bronze.vendas_raw")
-
-print("Bronze salvo com sucesso!")
+# Confirmar que a bronze existe
+print(f"certificacao_bronze.vendas_raw: {spark.table('certificacao_bronze.vendas_raw').count():,} registros")
+print("Bronze OK — pronto para limpeza.")
 
 # COMMAND ----------
 

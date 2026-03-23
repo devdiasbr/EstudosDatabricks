@@ -17,7 +17,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC OPTIMIZE certificacao_bronze.produtos;
+# MAGIC OPTIMIZE certificacao_bronze.vendas;
 
 # COMMAND ----------
 
@@ -29,7 +29,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC OPTIMIZE certificacao_bronze.produtos ZORDER BY (categoria);
+# MAGIC OPTIMIZE certificacao_bronze.vendas ZORDER BY (categoria);
 
 # COMMAND ----------
 
@@ -44,19 +44,19 @@
 
 # MAGIC %sql
 # MAGIC -- Ver arquivos no diretório da tabela ANTES do vacuum
-# MAGIC DESCRIBE DETAIL certificacao_bronze.produtos;
+# MAGIC DESCRIBE DETAIL certificacao_bronze.vendas;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- VACUUM com retenção padrão (168 horas = 7 dias)
-# MAGIC VACUUM certificacao_bronze.produtos RETAIN 168 HOURS;
+# MAGIC VACUUM certificacao_bronze.vendas RETAIN 168 HOURS;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- DRY RUN: ver o que seria removido sem realmente remover
-# MAGIC VACUUM certificacao_bronze.produtos RETAIN 168 HOURS DRY RUN;
+# MAGIC VACUUM certificacao_bronze.vendas RETAIN 168 HOURS DRY RUN;
 
 # COMMAND ----------
 
@@ -67,13 +67,13 @@
 
 # MAGIC %sql
 # MAGIC -- Isso vai dar ERRO por segurança (retenção mínima padrão é 168h)
-# MAGIC -- VACUUM certificacao_bronze.produtos RETAIN 0 HOURS;
+# MAGIC -- VACUUM certificacao_bronze.vendas RETAIN 0 HOURS;
 
 # COMMAND ----------
 
 # Para permitir retenção menor que 168h (NÃO FAÇA EM PRODUÇÃO):
 # spark.conf.set("spark.databricks.delta.retentionDurationCheck.enabled", "false")
-# spark.sql("VACUUM certificacao_bronze.produtos RETAIN 0 HOURS")
+# spark.sql("VACUUM certificacao_bronze.vendas RETAIN 0 HOURS")
 
 # COMMAND ----------
 

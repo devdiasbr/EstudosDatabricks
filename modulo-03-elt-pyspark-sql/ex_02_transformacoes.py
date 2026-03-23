@@ -10,37 +10,24 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Setup — Criar dados de exemplo
+# MAGIC ## Setup — Carregar dados do Faker
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
 
 # COMMAND ----------
 
 from pyspark.sql.functions import col, lit, when, upper, round as spark_round, current_date, datediff, to_date
 
-# Clientes
-clientes = [
-    (1, "Ana Silva", "ana@email.com", "SP", "2023-01-15"),
-    (2, "Bruno Costa", "bruno@email.com", "RJ", "2023-03-20"),
-    (3, "Carla Souza", "carla@email.com", "SP", "2023-06-10"),
-    (4, "Diego Lima", "diego@email.com", "MG", "2023-02-28"),
-    (5, "Elena Rocha", None, "RJ", "2023-09-05")
-]
-df_clientes = spark.createDataFrame(clientes, ["id", "nome", "email", "estado", "data_cadastro"])
-
-# Pedidos
-pedidos = [
-    (101, 1, "Notebook", 3500.00, "2024-01-10"),
-    (102, 2, "Mouse", 89.90, "2024-01-12"),
-    (103, 1, "Teclado", 199.90, "2024-01-15"),
-    (104, 3, "Monitor", 1899.00, "2024-02-01"),
-    (105, 4, "Webcam", 299.90, "2024-02-10"),
-    (106, 6, "Headset", 450.00, "2024-02-15")  # cliente_id 6 não existe
-]
-df_pedidos = spark.createDataFrame(pedidos, ["pedido_id", "cliente_id", "produto", "valor", "data_pedido"])
+# Carregar tabelas geradas pelo Faker
+df_clientes = spark.table("certificacao_bronze.clientes")
+df_pedidos  = spark.table("certificacao_bronze.vendas")
 
 df_clientes.createOrReplaceTempView("clientes")
 df_pedidos.createOrReplaceTempView("pedidos")
 
-print("Dados criados com sucesso!")
+print(f"clientes: {df_clientes.count():,} registros")
+print(f"vendas  : {df_pedidos.count():,} registros")
+display(df_clientes.limit(5))
 
 # COMMAND ----------
 

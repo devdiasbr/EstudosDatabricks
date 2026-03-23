@@ -47,6 +47,13 @@
 #     .toTable("certificacao_bronze.vendas_streaming")
 
 print("Auto Loader: código de referência (descomente quando tiver dados)")
+print()
+print("Os CSVs para este exercício foram gerados pelo Faker em:")
+print("  /tmp/autoloader_vendas/lote_01/")
+print("  /tmp/autoloader_vendas/lote_02/")
+print("  /tmp/autoloader_vendas/lote_03/")
+print()
+print("Substitua '/data/vendas/' por '/tmp/autoloader_vendas/' no código acima.")
 
 # COMMAND ----------
 
@@ -56,13 +63,19 @@ print("Auto Loader: código de referência (descomente quando tiver dados)")
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- COPY INTO: ingestão incremental via SQL
-# MAGIC -- Idempotente: não reprocessa arquivos já carregados
+# MAGIC -- COPY INTO usando os CSVs gerados pelo Faker
+# MAGIC -- Idempotente: re-executar não duplica dados
 # MAGIC
-# MAGIC -- COPY INTO certificacao_bronze.vendas_copy
-# MAGIC -- FROM '/data/vendas/incoming/'
-# MAGIC -- FILEFORMAT = CSV
-# MAGIC -- FORMAT_OPTIONS ('header' = 'true', 'inferSchema' = 'true');
+# MAGIC CREATE TABLE IF NOT EXISTS certificacao_bronze.vendas_copy_into
+# MAGIC USING DELTA;
+# MAGIC
+# MAGIC COPY INTO certificacao_bronze.vendas_copy_into
+# MAGIC FROM '/tmp/autoloader_vendas/'
+# MAGIC FILEFORMAT = CSV
+# MAGIC FORMAT_OPTIONS ('header' = 'true', 'inferSchema' = 'true')
+# MAGIC COPY_OPTIONS ('mergeSchema' = 'true');
+# MAGIC
+# MAGIC SELECT COUNT(*) as total FROM certificacao_bronze.vendas_copy_into;
 
 # COMMAND ----------
 

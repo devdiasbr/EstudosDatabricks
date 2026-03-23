@@ -15,17 +15,26 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC -- View que mascara o email para quem NÃO é do grupo admin
-# MAGIC CREATE OR REPLACE VIEW dev_certificacao.gold.eventos_seguros AS
+# MAGIC -- View sobre funcionarios do Faker — mascara CPF e salário para não-RH
+# MAGIC -- Pré-requisito: execute utils/gerar_dados_faker.py
+# MAGIC CREATE OR REPLACE VIEW dev_certificacao.gold.funcionarios_seguros AS
 # MAGIC SELECT
-# MAGIC   id,
-# MAGIC   evento,
+# MAGIC   funcionario_id,
+# MAGIC   nome,
+# MAGIC   departamento,
+# MAGIC   cargo,
+# MAGIC   nivel,
 # MAGIC   CASE
-# MAGIC     WHEN is_account_group_member('admin') THEN usuario
-# MAGIC     ELSE regexp_replace(usuario, '(.).*(@.*)', '$1***$2')
-# MAGIC   END AS usuario,
-# MAGIC   timestamp
-# MAGIC FROM dev_certificacao.bronze.eventos;
+# MAGIC     WHEN is_account_group_member('rh') THEN cpf
+# MAGIC     ELSE '***.***.***-**'
+# MAGIC   END AS cpf,
+# MAGIC   CASE
+# MAGIC     WHEN is_account_group_member('rh') OR is_account_group_member('gestores')
+# MAGIC       THEN salario
+# MAGIC     ELSE NULL
+# MAGIC   END AS salario,
+# MAGIC   estado
+# MAGIC FROM hive_metastore.certificacao_bronze.funcionarios;
 
 # COMMAND ----------
 

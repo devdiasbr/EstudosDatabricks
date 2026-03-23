@@ -57,26 +57,28 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1.3 — Criar tabela no hive_metastore
+# MAGIC ## 1.3 — Popular o hive_metastore com dados do Faker
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
+# MAGIC
+# MAGIC As tabelas `certificacao_bronze.*` já existem no `hive_metastore` (namespace padrão).
+# MAGIC Vamos criar um database legado e copiar dados do Faker para simular o ambiente de migração.
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC CREATE TABLE IF NOT EXISTS hive_metastore.estudos_legado.vendas (
-# MAGIC   id INT,
-# MAGIC   produto STRING,
-# MAGIC   categoria STRING,
-# MAGIC   valor DOUBLE,
-# MAGIC   data_venda DATE,
-# MAGIC   estado STRING
-# MAGIC ) USING DELTA;
+# MAGIC -- Criar database legado no hive_metastore
+# MAGIC CREATE DATABASE IF NOT EXISTS hive_metastore.estudos_legado
+# MAGIC COMMENT 'Database legado para estudos de migração';
 # MAGIC
-# MAGIC INSERT INTO hive_metastore.estudos_legado.vendas VALUES
-# MAGIC   (1, 'Notebook', 'eletronicos', 3500.00, '2024-01-15', 'SP'),
-# MAGIC   (2, 'Mouse', 'perifericos', 89.90, '2024-01-20', 'RJ'),
-# MAGIC   (3, 'Monitor', 'eletronicos', 1899.00, '2024-02-01', 'MG'),
-# MAGIC   (4, 'Teclado', 'perifericos', 199.90, '2024-02-10', 'SP'),
-# MAGIC   (5, 'SSD', 'armazenamento', 399.90, '2024-03-05', 'RJ');
+# MAGIC -- Copiar dados reais do Faker para o database legado
+# MAGIC CREATE TABLE IF NOT EXISTS hive_metastore.estudos_legado.vendas
+# MAGIC USING DELTA AS
+# MAGIC SELECT venda_id AS id, categoria, valor_total AS valor, data_venda, estado, canal, status
+# MAGIC FROM   hive_metastore.certificacao_bronze.vendas
+# MAGIC LIMIT  10000;
+# MAGIC
+# MAGIC SELECT COUNT(*) as total FROM hive_metastore.estudos_legado.vendas;
 
 # COMMAND ----------
 

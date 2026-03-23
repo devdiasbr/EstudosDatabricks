@@ -12,21 +12,22 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## 1.1 — CREATE TABLE (Delta)
+# MAGIC ## 1.1 — Tabela de trabalho para este exercício
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
+# MAGIC
+# MAGIC Vamos criar uma **cópia de trabalho** dos produtos para praticar DML sem alterar os dados originais.
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC DROP TABLE IF EXISTS certificacao_bronze.produtos;
+# MAGIC -- Criar tabela de trabalho a partir dos dados Faker
+# MAGIC CREATE OR REPLACE TABLE certificacao_bronze.produtos_trabalho_trabalho
+# MAGIC AS SELECT produto_id AS id, nome, categoria, preco, estoque, ativo
+# MAGIC    FROM certificacao_bronze.produtos_trabalho
+# MAGIC    LIMIT 20;
 # MAGIC
-# MAGIC CREATE TABLE certificacao_bronze.produtos (
-# MAGIC   id INT,
-# MAGIC   nome STRING,
-# MAGIC   categoria STRING,
-# MAGIC   preco DOUBLE,
-# MAGIC   estoque INT,
-# MAGIC   ativo BOOLEAN
-# MAGIC ) USING DELTA;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho_trabalho;
 
 # COMMAND ----------
 
@@ -36,14 +37,11 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC INSERT INTO certificacao_bronze.produtos VALUES
-# MAGIC   (1, 'Notebook Dell', 'eletronicos', 3500.00, 50, true),
-# MAGIC   (2, 'Mouse Logitech', 'perifericos', 89.90, 200, true),
-# MAGIC   (3, 'Teclado Mecânico', 'perifericos', 199.90, 150, true),
-# MAGIC   (4, 'Monitor Samsung', 'eletronicos', 1899.00, 30, true),
-# MAGIC   (5, 'Webcam HD', 'perifericos', 299.90, 100, false);
+# MAGIC INSERT INTO certificacao_bronze.produtos_trabalho_trabalho VALUES
+# MAGIC   (21, 'Novo Produto Teste', 'eletronicos', 999.00, 10, true),
+# MAGIC   (22, 'Outro Produto',      'perifericos',  49.90,  5, true);
 # MAGIC
-# MAGIC SELECT * FROM certificacao_bronze.produtos;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho_trabalho ORDER BY id;
 
 # COMMAND ----------
 
@@ -54,16 +52,16 @@
 
 # MAGIC %sql
 # MAGIC -- Atualizar preço do Notebook
-# MAGIC UPDATE certificacao_bronze.produtos
+# MAGIC UPDATE certificacao_bronze.produtos_trabalho
 # MAGIC SET preco = 3299.00
 # MAGIC WHERE id = 1;
 # MAGIC
 # MAGIC -- Reativar Webcam
-# MAGIC UPDATE certificacao_bronze.produtos
+# MAGIC UPDATE certificacao_bronze.produtos_trabalho
 # MAGIC SET ativo = true
 # MAGIC WHERE id = 5;
 # MAGIC
-# MAGIC SELECT * FROM certificacao_bronze.produtos;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
@@ -74,10 +72,10 @@
 
 # MAGIC %sql
 # MAGIC -- Deletar produto inativo (se houvesse)
-# MAGIC DELETE FROM certificacao_bronze.produtos
+# MAGIC DELETE FROM certificacao_bronze.produtos_trabalho
 # MAGIC WHERE ativo = false;
 # MAGIC
-# MAGIC SELECT * FROM certificacao_bronze.produtos;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
@@ -101,7 +99,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC MERGE INTO certificacao_bronze.produtos AS target
+# MAGIC MERGE INTO certificacao_bronze.produtos_trabalho AS target
 # MAGIC USING produtos_atualizacao AS source
 # MAGIC ON target.id = source.id
 # MAGIC WHEN MATCHED THEN
@@ -117,7 +115,7 @@
 
 # MAGIC %sql
 # MAGIC -- Verificar resultado do MERGE
-# MAGIC SELECT * FROM certificacao_bronze.produtos ORDER BY id;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho ORDER BY id;
 
 # COMMAND ----------
 
@@ -137,7 +135,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC MERGE INTO certificacao_bronze.produtos AS target
+# MAGIC MERGE INTO certificacao_bronze.produtos_trabalho AS target
 # MAGIC USING produtos_sync AS source
 # MAGIC ON target.id = source.id
 # MAGIC WHEN MATCHED AND source.ativo = false THEN DELETE
@@ -147,7 +145,7 @@
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC SELECT * FROM certificacao_bronze.produtos ORDER BY id;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho ORDER BY id;
 
 # COMMAND ----------
 

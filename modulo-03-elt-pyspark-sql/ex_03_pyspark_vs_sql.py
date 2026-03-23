@@ -10,21 +10,18 @@
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC ## Setup
+# MAGIC ## Setup — Carregar dados do Faker
+# MAGIC
+# MAGIC > **Pré-requisito:** Execute `utils/gerar_dados_faker.py` antes de começar.
 
 # COMMAND ----------
 
-dados = [
-    (1, "Ana", "Engenharia", 8500.00, "SP"),
-    (2, "Bruno", "Dados", 9200.00, "RJ"),
-    (3, "Carla", "Engenharia", 8800.00, "SP"),
-    (4, "Diego", "Dados", 9500.00, "MG"),
-    (5, "Elena", "Produto", 8100.00, "RJ"),
-    (6, "Felipe", "Dados", 10200.00, "SP"),
-    (7, "Gabi", "Engenharia", 7900.00, "MG")
-]
-df = spark.createDataFrame(dados, ["id", "nome", "departamento", "salario", "estado"])
+# Usar a tabela de funcionários gerada pelo Faker
+df = spark.table("certificacao_bronze.funcionarios")
 df.createOrReplaceTempView("funcionarios")
+
+print(f"funcionarios: {df.count():,} registros")
+display(df.limit(5))
 
 # COMMAND ----------
 

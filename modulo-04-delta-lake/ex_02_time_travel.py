@@ -16,7 +16,7 @@
 
 # MAGIC %sql
 # MAGIC -- Ver histórico de operações na tabela
-# MAGIC DESCRIBE HISTORY certificacao_bronze.produtos;
+# MAGIC DESCRIBE HISTORY certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
@@ -27,19 +27,19 @@
 
 # MAGIC %sql
 # MAGIC -- Versão 0 (estado original após o CREATE)
-# MAGIC SELECT * FROM certificacao_bronze.produtos VERSION AS OF 0;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho VERSION AS OF 0;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- Versão 1 (após primeiro INSERT)
-# MAGIC SELECT * FROM certificacao_bronze.produtos VERSION AS OF 1;
+# MAGIC SELECT * FROM certificacao_bronze.produtos_trabalho VERSION AS OF 1;
 
 # COMMAND ----------
 
 # PySpark — Time Travel
-df_v0 = spark.read.format("delta").option("versionAsOf", 0).table("certificacao_bronze.produtos")
-df_v1 = spark.read.format("delta").option("versionAsOf", 1).table("certificacao_bronze.produtos")
+df_v0 = spark.read.format("delta").option("versionAsOf", 0).table("certificacao_bronze.produtos_trabalho")
+df_v1 = spark.read.format("delta").option("versionAsOf", 1).table("certificacao_bronze.produtos_trabalho")
 
 print(f"Versão 0: {df_v0.count()} registros")
 print(f"Versão 1: {df_v1.count()} registros")
@@ -54,7 +54,7 @@ print(f"Versão 1: {df_v1.count()} registros")
 # MAGIC %sql
 # MAGIC -- Consultar estado da tabela em um momento específico
 # MAGIC -- (ajuste o timestamp para um valor válido do seu DESCRIBE HISTORY)
-# MAGIC -- SELECT * FROM certificacao_bronze.produtos TIMESTAMP AS OF '2024-01-15T10:00:00';
+# MAGIC -- SELECT * FROM certificacao_bronze.produtos_trabalho TIMESTAMP AS OF '2024-01-15T10:00:00';
 
 # COMMAND ----------
 
@@ -64,8 +64,8 @@ print(f"Versão 1: {df_v1.count()} registros")
 # COMMAND ----------
 
 # Comparar registros entre versões
-df_antes = spark.read.format("delta").option("versionAsOf", 1).table("certificacao_bronze.produtos")
-df_depois = spark.table("certificacao_bronze.produtos")
+df_antes = spark.read.format("delta").option("versionAsOf", 1).table("certificacao_bronze.produtos_trabalho")
+df_depois = spark.table("certificacao_bronze.produtos_trabalho")
 
 # Registros que foram removidos
 df_removidos = df_antes.subtract(df_depois)
@@ -86,25 +86,25 @@ display(df_novos)
 
 # MAGIC %sql
 # MAGIC -- Ver estado atual
-# MAGIC SELECT COUNT(*) as total_atual FROM certificacao_bronze.produtos;
+# MAGIC SELECT COUNT(*) as total_atual FROM certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- Restaurar para versão anterior
-# MAGIC RESTORE TABLE certificacao_bronze.produtos TO VERSION AS OF 1;
+# MAGIC RESTORE TABLE certificacao_bronze.produtos_trabalho TO VERSION AS OF 1;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- Verificar que restaurou
-# MAGIC SELECT COUNT(*) as total_restaurado FROM certificacao_bronze.produtos;
+# MAGIC SELECT COUNT(*) as total_restaurado FROM certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
 # MAGIC %sql
 # MAGIC -- DESCRIBE HISTORY mostra a operação RESTORE
-# MAGIC DESCRIBE HISTORY certificacao_bronze.produtos;
+# MAGIC DESCRIBE HISTORY certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
@@ -115,7 +115,7 @@ display(df_novos)
 
 # MAGIC %sql
 # MAGIC -- Metadados detalhados da tabela
-# MAGIC DESCRIBE DETAIL certificacao_bronze.produtos;
+# MAGIC DESCRIBE DETAIL certificacao_bronze.produtos_trabalho;
 
 # COMMAND ----------
 
