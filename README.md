@@ -21,8 +21,8 @@
 |---------|------|---------|
 | Databricks Lakehouse Platform | ~24% | 1, 2 |
 | ELT with Spark SQL and Python | ~29% | 3, 4 |
-| Incremental Data Processing | ~16% | 5 |
-| Production Pipelines | ~16% | 5 |
+| Incremental Data Processing | ~16% | 5, 5-B |
+| Production Pipelines | ~16% | 5, 5-B |
 | Data Governance | ~11% | 6, 7, 8 |
 
 ---
@@ -93,6 +93,15 @@ plano-de-estudos/
 │   ├── ex_01_workflow_tasks.py        ← Notebook: tasks + task values
 │   ├── ex_02_dlt_medallion.py         ← Notebook: pipeline DLT declarativo
 │   └── ex_03_autoloader.py            ← Notebook: Auto Loader + Structured Streaming
+│
+├── modulo-05b-conexoes-externas/      ← NOVO: Landing Zones & Fontes Externas
+│   ├── README.md
+│   ├── ex_01_cloud_storage.py        ← Notebook: Azure ADLS, AWS S3, GCP GCS
+│   ├── ex_02_bancos_relacionais.py   ← Notebook: JDBC — SQL Server, PostgreSQL, MySQL, Oracle
+│   ├── ex_03_bancos_nosql.py         ← Notebook: MongoDB, Cosmos DB, DynamoDB
+│   ├── ex_04_apis_arquivos.py        ← Notebook: REST APIs + formatos (CSV, JSON, Parquet, Avro, XML)
+│   ├── ex_05_secrets_seguranca.py    ← Notebook: Databricks Secrets, Key Vault, IAM
+│   └── ex_06_landing_to_bronze.py    ← Notebook: pipeline completo landing → bronze
 │
 ├── modulo-06-unity-catalog/
 │   ├── README.md
@@ -176,7 +185,8 @@ Os arquivos `.py` usam o formato de notebook do Databricks:
 | 3–4 | Módulo 3 — ELT com PySpark e SparkSQL | 3h + 2h30 |
 | 5 | Módulo 4 — Delta Lake Profundo | 3h |
 | 6–7 | Módulo 5 — Workflows, DLT, Auto Loader | 2h + 2h |
-| 8 | Módulo 6 — Unity Catalog & Governança | 2h30 |
+| 7–8 | Módulo 5-B — Conexões Externas (Cloud, JDBC, NoSQL, APIs) | 3h + 2h |
+| 9 | Módulo 6 — Unity Catalog & Governança | 2h30 |
 | 9 | Módulo 7 — Hive Metastore (legado) | 2h30 |
 | 10–11 | Módulo 8 — Migração Hive → UC (bônus) | 2h30 + 2h |
 | 12 | Módulo 9 — Exam Guide + Preparação | 2h |
@@ -191,10 +201,10 @@ Os arquivos `.py` usam o formato de notebook do Databricks:
 
 | Métrica | Quantidade |
 |---------|-----------|
-| Módulos | 10 |
-| Notebooks (.py) | 30 |
-| Exercícios hands-on | 80+ |
-| Perguntas exam-style | 40+ |
+| Módulos | 11 |
+| Notebooks (.py) | 36 |
+| Exercícios hands-on | 100+ |
+| Perguntas exam-style | 55+ |
 | Flashcards | 25+ |
 | Questões de simulado | 20 (modelo) |
 | Registros gerados (Faker) | ~82.000 |
