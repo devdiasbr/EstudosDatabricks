@@ -92,7 +92,9 @@ plano-de-estudos/
 │   ├── README.md
 │   ├── ex_01_workflow_tasks.py        ← Notebook: tasks + task values
 │   ├── ex_02_dlt_medallion.py         ← Notebook: pipeline DLT declarativo
-│   └── ex_03_autoloader.py            ← Notebook: Auto Loader + Structured Streaming
+│   ├── ex_03_autoloader.py            ← Notebook: Auto Loader + Structured Streaming
+│   ├── ex_04_cdc_apply_changes.py     ← Notebook: CDC + APPLY CHANGES INTO (SCD1/SCD2)
+│   └── ex_05_databricks_sql.py        ← Notebook: SQL Warehouses, Dashboards, Alerts
 │
 ├── modulo-05b-conexoes-externas/      ← NOVO: Landing Zones & Fontes Externas
 │   ├── README.md
@@ -107,7 +109,9 @@ plano-de-estudos/
 │   ├── README.md
 │   ├── ex_01_hierarquia_uc.py         ← Notebook: catalog → schema → table
 │   ├── ex_02_permissoes.py            ← Notebook: GRANT, REVOKE, SHOW GRANTS
-│   └── ex_03_dynamic_views.py         ← Notebook: views com mascaramento
+│   ├── ex_03_dynamic_views.py         ← Notebook: views com mascaramento
+│   ├── ex_04_delta_sharing.py         ← Notebook: compartilhamento cross-org/cloud
+│   └── ex_05_lineage_repos.py         ← Notebook: Data Lineage + Git Integration
 │
 ├── modulo-07-hive-metastore/
 │   ├── README.md
@@ -125,7 +129,7 @@ plano-de-estudos/
 │
 ├── modulo-09-certificacao/
 │   ├── README.md
-│   └── exam_guide_checklist.md        ← Checklist do Exam Guide (48 tópicos)
+│   └── exam_guide_checklist.md        ← Checklist do Exam Guide (59 tópicos)
 │
 ├── modulo-10-simulados-revisao/
 │   ├── README.md
@@ -202,13 +206,13 @@ Os arquivos `.py` usam o formato de notebook do Databricks:
 | Métrica | Quantidade |
 |---------|-----------|
 | Módulos | 11 |
-| Notebooks (.py) | 36 |
-| Exercícios hands-on | 100+ |
-| Perguntas exam-style | 55+ |
+| Notebooks (.py) | 40 |
+| Exercícios hands-on | 120+ |
+| Perguntas exam-style | 75+ |
 | Flashcards | 25+ |
 | Questões de simulado | 20 (modelo) |
 | Registros gerados (Faker) | ~82.000 |
-| Tópicos do Exam Guide mapeados | 48 |
+| Tópicos do Exam Guide mapeados | 59 |
 
 ---
 

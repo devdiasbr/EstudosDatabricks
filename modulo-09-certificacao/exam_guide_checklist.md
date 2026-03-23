@@ -15,20 +15,22 @@ Marque como concluído quando se sentir confiante no tema.
 - [ ] Criar e usar notebooks → **Módulo 2, Ex 3**
 - [ ] Usar magic commands → **Módulo 2, Ex 3**
 - [ ] Usar dbutils → **Módulo 2, Ex 1**
-- [ ] Conectar repos/git → **Estudo complementar**
+- [ ] Conectar repos/git ao Workspace → **Módulo 6, Ex 5**
+- [ ] SQL Warehouses (Classic, Pro, Serverless) → **Módulo 5, Ex 5**
+- [ ] Diferenciar SQL Warehouse vs All-Purpose Cluster → **Módulo 5, Ex 5**
 
 ---
 
 ## Domínio 2: ELT with Spark SQL and Python (~29%)
 
-- [ ] Ler dados em múltiplos formatos → **Módulo 3, Ex 1**
+- [ ] Ler dados em múltiplos formatos (CSV, JSON, Parquet, Delta, Avro) → **Módulo 3, Ex 1 + Módulo 5-B, Ex 4**
 - [ ] Usar schema explícito (StructType) → **Módulo 3, Ex 1.5**
 - [ ] Aplicar transformações (select, filter, groupBy, join) → **Módulo 3, Ex 2**
 - [ ] Criar e usar Temp Views → **Módulo 3, Ex 3**
 - [ ] Diferenciar Actions vs Transformations → **Módulo 3**
 - [ ] Escrever queries SparkSQL → **Módulo 3, Ex 3**
 - [ ] Usar higher-order functions → **Módulo 3, Ex 5**
-- [ ] Trabalhar com dados aninhados (JSON/structs) → **Módulo 3, Ex 5**
+- [ ] Trabalhar com dados aninhados (JSON/structs) → **Módulo 3, Ex 5 + Módulo 5-B, Ex 3**
 - [ ] Operações Delta: INSERT, UPDATE, DELETE → **Módulo 4, Ex 1**
 - [ ] MERGE (upsert) → **Módulo 4, Ex 1**
 - [ ] Time Travel → **Módulo 4, Ex 2**
@@ -49,6 +51,10 @@ Marque como concluído quando se sentir confiante no tema.
 - [ ] Trigger modes (availableNow, processingTime) → **Módulo 5, Ex 3**
 - [ ] Checkpointing → **Módulo 5, Ex 3**
 - [ ] Auto Loader vs COPY INTO → **Módulo 5, Ex 3**
+- [ ] Conectar a fontes externas (Cloud Storage, JDBC) → **Módulo 5-B, Ex 1-2**
+- [ ] CDC (Change Data Capture) conceito → **Módulo 5, Ex 4**
+- [ ] APPLY CHANGES INTO (DLT CDC) → **Módulo 5, Ex 4**
+- [ ] SCD Type 1 vs SCD Type 2 → **Módulo 5, Ex 4**
 
 ---
 
@@ -62,6 +68,8 @@ Marque como concluído quando se sentir confiante no tema.
 - [ ] Expectations (expect, expect_or_drop, expect_or_fail) → **Módulo 5, Ex 2**
 - [ ] Arquitetura Medallion → **Módulo 3, Ex 4 + Módulo 5, Ex 2**
 - [ ] Streaming Tables vs Materialized Views → **Módulo 5, Ex 2**
+- [ ] Dashboards e Alerts (DBSQL) → **Módulo 5, Ex 5**
+- [ ] Databricks Repos e CI/CD → **Módulo 6, Ex 5**
 
 ---
 
@@ -72,7 +80,10 @@ Marque como concluído quando se sentir confiante no tema.
 - [ ] GRANT/REVOKE permissões → **Módulo 6, Ex 2**
 - [ ] USAGE vs SELECT → **Módulo 6, Ex 2**
 - [ ] Dynamic Views (mascaramento) → **Módulo 6, Ex 3**
-- [ ] Data Lineage → **Módulo 6**
+- [ ] Delta Sharing → **Módulo 6, Ex 4**
+- [ ] Data Lineage (table, column, notebook-level) → **Módulo 6, Ex 5**
+- [ ] External Locations e Storage Credentials → **Módulo 5-B, Ex 1**
+- [ ] Databricks Secrets (segurança de credenciais) → **Módulo 5-B, Ex 5**
 - [ ] Hive Metastore (legado) → **Módulo 7**
 - [ ] Migração Hive → UC → **Módulo 8 (bônus)**
 
@@ -82,11 +93,13 @@ Marque como concluído quando se sentir confiante no tema.
 
 | Domínio | Total | Concluídos | % |
 |---------|-------|-----------|---|
-| Lakehouse Platform | 9 | ___ | ___% |
+| Lakehouse Platform | 11 | ___ | ___% |
 | ELT Spark SQL/Python | 17 | ___ | ___% |
-| Incremental Data | 6 | ___ | ___% |
-| Production Pipelines | 8 | ___ | ___% |
-| Data Governance | 8 | ___ | ___% |
-| **TOTAL** | **48** | ___ | ___% |
+| Incremental Data | 10 | ___ | ___% |
+| Production Pipelines | 10 | ___ | ___% |
+| Data Governance | 11 | ___ | ___% |
+| **TOTAL** | **59** | ___ | ___% |
 
 > **Meta:** 100% concluído antes de agendar o exame.
+> **Dica:** Use o Exam Guide oficial da Databricks para validar que não faltou nada:
+> https://www.databricks.com/learn/certification/data-engineer-associate
